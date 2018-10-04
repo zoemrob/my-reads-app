@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.5.4",
+    "form-serialize": "^0.7.2",
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
