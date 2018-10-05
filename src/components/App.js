@@ -25,7 +25,7 @@ class App extends Component {
                 wantToRead: [],
                 read: []
             },
-            searchResults: [{id: 'test-book'}]
+            searchResults: [{id: 'test-book'}, {id: 'strange-book'}]
         };
 
         this.addToBookshelf = this.addToBookshelf.bind(this);
@@ -47,7 +47,9 @@ class App extends Component {
             <React.Fragment>
                 <header className="header">
                     <Route exact path='/' component={MainHeader}/>
-                    <Route path='/search' component={SearchHeader}/>
+                    <Route path='/search' render={() => (
+                        <SearchHeader updateSearchResults={this.updateSearchResults} resultCount={searchResults.length}/>
+                    )}/>
                 </header>
                 <div className="page-content">
                     <Route exact path='/' render={() => (

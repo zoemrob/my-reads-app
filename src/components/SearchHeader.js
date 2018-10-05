@@ -11,6 +11,13 @@ class SearchHeader extends Component {
         this.handleInput = this.handleInput.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        const { query } = this.state;
+        if (query !== '' && query !== prevState.query) {
+            this.props.updateSearchResults(query);
+        }
+    }
+
     handleInput(event) {
         this.setState({query: event.target.value});
     }
