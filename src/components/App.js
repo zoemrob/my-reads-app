@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Bookshelf from './Bookshelf';
+import MainHeader from './MainHeader';
+import SearchHeader from './SearchHeader';
 import * as BooksAPI from '../BooksAPI';
 import '../styles/App.css';
 import SearchPage from "./SearchPage";
@@ -44,10 +46,8 @@ class App extends Component {
         return (
             <React.Fragment>
                 <header className="header">
-                    <Route exact path='/' render={({ history }) => (
-                        <h1 className="main-page">My Reads</h1>
-                    )}/>
-                    <Route path='/search'/>
+                    <Route exact path='/' component={MainHeader}/>
+                    <Route path='/search' component={SearchHeader}/>
                 </header>
                 <div className="page-content">
                     <Route exact path='/' render={() => (

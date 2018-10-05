@@ -1,13 +1,106 @@
 .header {
     background-color: rgba(255,255,255,0.5);
-    padding: 1rem 0;
     border-radius: 35px;
     margin: 1rem;
+    position: relative;
+    text-align: center;
 }
 
 .header h1.main-page {
-    text-align: center;
+    padding: 1rem 0;
     margin: 0;
+}
+
+.header label.search-label {
+    width: 50%;
+    padding: 1rem;
+}
+
+.header button {
+    position: absolute;
+    top: 1rem;
+    border: 2px solid #000;
+    border-radius: 50px;
+    text-transform: uppercase;
+    color: #000;
+    padding: 8px 30px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    overflow: hidden;
+}
+
+.header button.search-button {
+    right: 8%;
+}
+
+.header button.search-button:before {
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    font-size: 2em;
+    left: 70%;
+    opacity: 0;
+    top: 0;
+    position: absolute;
+    content: " >";
+}
+
+.header button.search-button:hover:before {
+    left:80%;
+    opacity:1
+}
+
+.header button.back-button {
+    left: 6%;
+}
+
+.header button.back-button:before {
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    font-size: 2em;
+    right: 70%;
+    opacity: 0;
+    top: 0;
+    position: absolute;
+    content: "< ";
+}
+
+.header button.search-button:hover:before {
+    right:80%;
+    opacity:1
+}
+
+.header button:focus {
+    outline:none;
+    -webkit-box-shadow:0 0 2px 2px #5b9dd9;
+    box-shadow:0 0 2px 2px #5b9dd9;
+    transform: scale(1.05);
+}
+
+
+.header button:hover {
+    background-color: rgba(255,255,255,0.7);
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
+    transform: scale(1.05);
+}
+
+.header input.search-input {
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    width: 60%;
+    font-size: 1.5rem;
+    padding: 8px 8px 8px 24px;
+    margin: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+.header input.search-input:focus,
+.header input.search-input:hover {
+    outline: none;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
+    background-color: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    transform: scale(1.1);
 }
 
 div .page-content {
