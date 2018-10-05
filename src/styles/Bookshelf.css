@@ -1,5 +1,10 @@
+ul.search-results,
 ul.bookshelf {
     list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
     padding: 0;
-    display: inline-block;
 }

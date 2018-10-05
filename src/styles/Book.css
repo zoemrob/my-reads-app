@@ -1,0 +1,13 @@
+li.book {
+    margin: 16px;
+    text-align: center;
+    border: 2px solid black;
+    width: 17.5%;
+    background-color: rgba(240,240,240,0.3);
+    flex-grow: 1;
+    position: relative;
+}
+
+li.book img {
+    margin-top: 16px;
+}

@@ -25,7 +25,7 @@ class App extends Component {
                 wantToRead: [],
                 read: []
             },
-            searchResults: [{id: 'test-book'}, {id: 'strange-book'}]
+            searchResults: []
         };
 
         this.addToBookshelf = this.addToBookshelf.bind(this);
