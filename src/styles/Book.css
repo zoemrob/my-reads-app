@@ -11,3 +11,12 @@ li.book {
 li.book img {
     margin-top: 16px;
 }
+
+li.book p.book-authors {
+    padding: 1rem;
+}
+
+li.book select option.unselected {
+    font-style: italic;
+    color: darkgray;
+}

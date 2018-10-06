@@ -21,7 +21,7 @@ class App extends Component {
          */
         this.state = {
             bookshelf: {
-                reading: [],
+                currentlyReading: [],
                 wantToRead: [],
                 read: []
             },
@@ -32,8 +32,31 @@ class App extends Component {
         this.updateSearchResults = this.updateSearchResults.bind(this);
     }
 
-    addToBookshelf(event) {
+    addToBookshelf(book, shelf) {
+        console.log("State:");
+        console.log(this.state.bookshelf);
 
+        BooksAPI.update(book, shelf).then(() => {
+            switch (shelf) {
+                case 'currentlyReading':
+                    this.setState((prevState => ({
+                        bookshelf: Object.assign(prevState.bookshelf, {currentlyReading: prevState.bookshelf.currentlyReading.concat([book])})
+                    })));
+                    break;
+                case 'wantToRead':
+                    this.setState((prevState => ({
+                        bookshelf: Object.assign(prevState.bookshelf, { wantToRead: prevState.bookshelf.wantToRead.concat([book])})
+                    })));
+                    break;
+                case 'read':
+                    this.setState((prevState => ({
+                        bookshelf: Object.assign(prevState.bookshelf, { read: prevState.bookshelf.read.concat([book])})
+                    })));
+                    break;
+                default:
+                    return;
+            }
+        })
     }
 
     updateSearchResults(query) {
@@ -56,7 +79,7 @@ class App extends Component {
                         <Bookshelf {...bookshelf}/>
                     )}/>
                     <Route path='/search' render={() => (
-                        <SearchPage searchResults={searchResults}/>
+                        <SearchPage searchResults={searchResults} bookshelf={bookshelf} addToBookshelf={this.addToBookshelf}/>
                     )}/>
                 </div>
             </React.Fragment>
