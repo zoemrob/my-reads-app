@@ -14,7 +14,7 @@ class SearchHeader extends Component {
     componentDidUpdate(prevProps, prevState) {
         const { query } = this.state;
         if (query !== prevState.query) {
-            this.props.updateSearchResults(query);
+            this.props.updateSearchResults(query.trim());
         }
     }
 

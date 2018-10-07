@@ -56,10 +56,10 @@ class App extends Component {
     }
 
     updateSearchResults(query) {
-        if (query.trim() === '') {
+        if (query === '') {
             this.setState({searchResults: []});
         } else {
-            BooksAPI.search(query.trim()).then(response => {
+            BooksAPI.search(query).then(response => {
                 if (typeof response.error !== "undefined") {
                     this.setState({searchResults: []})
                 } else {
@@ -85,6 +85,16 @@ class App extends Component {
         return bookArray.map(book => book.id);
     }
 
+    /**
+     *
+     * @param allBooks
+     * @param shelf {String}: 'read' || 'wantToRead' || 'reading'
+     * @return {*}
+     */
+    static createBookshelf(allBooks, shelf) {
+        return allBooks.filter(book => book.shelf === shelf);
+    }
+
     render() {
         const { searchResults, bookshelf } = this.state;
         const searchPageProps = {
@@ -92,6 +102,10 @@ class App extends Component {
             bookshelf: bookshelf,
             addToBookshelf: this.addToBookshelf,
             mergeBookshelfAndSearchResults: App.mergeBookshelfAndSearchResults
+        };
+
+        const bookshelfProps = {
+
         };
 
         return (
