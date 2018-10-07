@@ -34,74 +34,56 @@ class App extends Component {
         })
     }
 
-    componentDidUpdate() {
-        BooksAPI.getAll().then(books => {
-            this.setState({bookshelf: books});
-        })
-    }
-
-    // static makeBookshelf(books, prevBookshelf = {}) {
-    //     const currentlyReading = [],
-    //         wantToRead = [],
-    //         read = [];
-    //
-    //     for (let len = books.length, i = 0; i < len; i++) {
-    //         switch (books[i].shelf) {
-    //             case 'currentlyReading':
-    //                 currentlyReading.push(books[i]);
-    //                 break;
-    //             case 'wantToRead':
-    //                 wantToRead.push(books[i]);
-    //                 break;
-    //             case 'read':
-    //                 read.push(books[i]);
-    //                 break;
-    //             default:
-    //                 console.log('something whack happened in App.makeBookshelf');
-    //         }
-    //     }
-    //
-    //     const composed = {currentlyReading, wantToRead, read};
-    //     return Object.assign(prevBookshelf, composed);
-    // }
-
     addToBookshelf(book, shelf) {
         BooksAPI.update(book, shelf).then(() => {
             const addedBook = {...book, shelf: shelf};
+
             this.setState(prevState => {
-                return {bookshelf: [...prevState.bookshelf, addedBook]};
+                const existingIds = App.getIds(prevState.bookshelf);
+                if (existingIds.includes(addedBook.id)) {
+                    return {bookshelf: prevState.bookshelf.map(prevBook => {
+                        if (prevBook.id === addedBook.id) {
+                            return addedBook;
+                        } else {
+                            return prevBook;
+                        }
+                    })}
+                } else {
+                    return {bookshelf: [...prevState.bookshelf, addedBook]}
+                }
             })
         })
     }
 
     updateSearchResults(query) {
-        BooksAPI.search(query).then(books => this.setState({searchResults: books}));
+        if (query.trim() === '') {
+            this.setState({searchResults: []});
+        } else {
+            BooksAPI.search(query.trim()).then(response => {
+                if (typeof response.error !== "undefined") {
+                    this.setState({searchResults: []})
+                } else {
+                    this.setState({searchResults: response})
+                }
+            });
+        }
     }
 
     static mergeBookshelfAndSearchResults(searchResults, existingBookshelf) {
-        // return !(typeof searchResults === "undefined" || searchResults.length === 0) ?
-        //     Object.assign(existingBookshelf, searchResults) :
-        //     searchResults;
-        if (typeof searchResults === "undefined" || typeof existingBookshelf === "undefined") return [];
-        const existingMatches = searchResults.map(result => existingBookshelf.filter(existing => existing.id === result.id)).flat();
-        const matchedIds = App.getIds(existingMatches);
-        const final = searchResults.filter(result => !matchedIds.includes(result.id));
-        //const filteredSearchResults = searchResults.filter(result => )
-        debugger;
-        return existingMatches.concat(final);
+        //if (typeof searchResults === "undefined" || typeof existingBookshelf === "undefined") return [];
+        if (searchResults.length === 0) return [];
+        if (existingBookshelf.length === 0) return searchResults;
+
+        const existingMatches = searchResults.map(result => existingBookshelf.filter(existing => existing.id === result.id)).flat(),
+            matchedIds = App.getIds(existingMatches),
+            filteredResults = searchResults.filter(result => !matchedIds.includes(result.id));
+
+        return existingMatches.concat(filteredResults);
     }
 
     static getIds(bookArray) {
         return bookArray.map(book => book.id);
     }
-
-    //
-    // static checkBooks(searchResults, existingBookshelf) {
-    //     const searchIds = App.getIds(searchResults),
-    //         existingIds = App.getIds(existingBookshelf);
-    //
-    //     const matching = searchIds.map(searchResult => existingIds.filter(existingId => existingId === searchResult));
-    // }
 
     render() {
         const { searchResults, bookshelf } = this.state;

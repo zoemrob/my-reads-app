@@ -36,29 +36,8 @@ class Book extends Component {
         }
     }
 
-    // static getBookInBookshelf(bookId, bookshelf) {
-    //     let selectedShelf = "unselected";
-    //
-    //     for (let shelf in bookshelf) {
-    //         if (bookshelf.hasOwnProperty(shelf)) {
-    //             for (let len = bookshelf[shelf].length, i = 0; i < len; i++) {
-    //                 selectedShelf = Book.checkBookInShelf(bookshelf[shelf][i], bookId, shelf);
-    //                 if (selectedShelf !== "unselected") break;
-    //             }
-    //         }
-    //     }
-    //
-    //     return selectedShelf;
-    // }
-    //
-    // static checkBookInShelf(book, id, shelf) {
-    //     if (book.id === id) {
-    //         return shelf;
-    //     }
-    // }
-
     render() {
-        const { imageLinks, title, authors, id, shelf } = this.props.book;
+        const { imageLinks, title, authors, shelf } = this.props.book;
 
         return (
             <React.Fragment>
