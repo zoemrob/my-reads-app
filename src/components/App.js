@@ -32,6 +32,37 @@ class App extends Component {
         this.updateSearchResults = this.updateSearchResults.bind(this);
     }
 
+    componentDidMount() {
+        BooksAPI.getAll().then(books => {
+            this.setState({bookshelf: App.makeBookshelf(books)});
+        })
+    }
+
+    static makeBookshelf(books, prevBookshelf = {}) {
+        const currentlyReading = [],
+            wantToRead = [],
+            read = [];
+
+        for (let len = books.length, i = 0; i < len; i++) {
+            switch (books[i].shelf) {
+                case 'currentlyReading':
+                    currentlyReading.push(books[i]);
+                    break;
+                case 'wantToRead':
+                    wantToRead.push(books[i]);
+                    break;
+                case 'read':
+                    read.push(books[i]);
+                    break;
+                default:
+                    console.log('something whack happened in App.makeBookshelf');
+            }
+        }
+
+        const composed = {currentlyReading, wantToRead, read};
+        return Object.assign(prevBookshelf, composed);
+    }
+
     addToBookshelf(book, shelf) {
         console.log("State:");
         console.log(this.state.bookshelf);
