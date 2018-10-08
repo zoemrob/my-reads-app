@@ -37,7 +37,7 @@ class App extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.query !== this.state.query) {
-            this.updateSearchResults(this.state.query.trim());
+            this.updateSearchResults(this.state.query);
         }
     }
 
@@ -63,10 +63,10 @@ class App extends Component {
     }
 
     updateSearchResults(query) {
-        if (query === '') {
+        if (!query.replace(/\s/g, '').length) {
             this.setState({searchResults: []});
         } else {
-            BooksAPI.search(query).then(response => {
+            BooksAPI.search(query.trim()).then(response => {
                 if (typeof response.error !== "undefined") {
                     this.setState({searchResults: []})
                 } else {

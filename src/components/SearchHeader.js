@@ -20,7 +20,7 @@ class SearchHeader extends Component {
     }
 
     handleInput(event) {
-        const newQuery = event.target.value.trim();
+        const newQuery = event.target.value;
         this.setState({query: newQuery})
     }
 
