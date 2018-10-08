@@ -63,6 +63,7 @@ class App extends Component {
     }
 
     updateSearchResults(query) {
+        // Reference: https://stackoverflow.com/questions/10261986/how-to-detect-string-which-contains-only-spaces
         if (!query.replace(/\s/g, '').length) {
             this.setState({searchResults: []});
         } else {

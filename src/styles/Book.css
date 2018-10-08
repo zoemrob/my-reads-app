@@ -14,9 +14,19 @@ li.book img {
 
 li.book p.book-authors {
     padding: 1rem;
+    margin-bottom: 36px;
 }
 
-li.book select option.unselected {
-    font-style: italic;
-    color: darkgray;
+li.book select {
+    display: block;
+    margin-bottom: 16px;
+    width: 150px;
+    bottom: 0;
+    right: 1rem;
+    position: absolute;
+    padding: 8px;
+}
+
+li.book select.hidden {
+    display: none;
 }

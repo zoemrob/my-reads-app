@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import Select from '@material-ui/core/Select';
 import '../styles/Book.css';
 
 class Book extends Component {
     static propTypes = {
-        key: PropTypes.string,
         addToBookshelf: PropTypes.func,
         book: PropTypes.object,
         shelf: PropTypes.string
@@ -46,7 +44,6 @@ class Book extends Component {
 
     render() {
         const { imageLinks, title, authors, shelf } = this.props.book;
-        //debugger;
         return (
             <React.Fragment>
                 <li className="book"
@@ -69,6 +66,7 @@ class Book extends Component {
                     <select
                         value={shelf}
                         onChange={this.addToBookshelf}
+                        className={this.state.isMoveModalVisible ? undefined : "hidden"}
                     >
                         <option value="unselected" className="unselected">None</option>
                         <option value="wantToRead">Want to read</option>
