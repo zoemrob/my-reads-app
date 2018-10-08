@@ -16,10 +16,6 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        /**
-         *
-         * @type {{bookshelf: Array, searchResults: Array, query: string}}
-         */
         this.state = {
             bookshelf: [],
             searchResults: [],
