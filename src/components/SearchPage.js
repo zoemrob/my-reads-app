@@ -1,10 +1,11 @@
 import React from 'react';
 import Book from './Book';
+import { mergeBookshelfAndSearchResults } from '../staticMethods';
 import '../styles/Bookshelf.css';
 import '../styles/SearchPage.css';
 
 const SearchPage = (props) => {
-    const { searchResults, bookshelf, addToBookshelf, mergeBookshelfAndSearchResults } = props;
+    const { searchResults, bookshelf, addToBookshelf } = props;
     const mergedBooks = mergeBookshelfAndSearchResults(searchResults, bookshelf);
 
     return (

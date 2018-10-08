@@ -4,6 +4,7 @@ import Bookshelf from './Bookshelf';
 import MainHeader from './MainHeader';
 import SearchHeader from './SearchHeader';
 import * as BooksAPI from '../BooksAPI';
+import { getIds, createBookshelf } from "../staticMethods";
 import '../styles/App.css';
 import SearchPage from "./SearchPage";
 
@@ -16,8 +17,8 @@ class App extends Component {
         super(props);
 
         /**
-         * state of bookshelf at '/'
-         * @type {{bookshelf: {reading: Array, wantToRead: Array, read: Array}}}
+         *
+         * @type {{bookshelf: Array, searchResults: Array, query: string}}
          */
         this.state = {
             bookshelf: [],
@@ -37,7 +38,7 @@ class App extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.query !== this.state.query) {
-            this.updateSearchResults(this.state.query);
+            this._updateSearchResults(this.state.query);
         }
     }
 
@@ -46,7 +47,7 @@ class App extends Component {
             const addedBook = {...book, shelf: shelf};
 
             this.setState(prevState => {
-                const existingIds = App.getIds(prevState.bookshelf);
+                const existingIds = getIds(prevState.bookshelf);
                 if (existingIds.includes(addedBook.id)) {
                     return {bookshelf: prevState.bookshelf.map(prevBook => {
                         if (prevBook.id === addedBook.id) {
@@ -62,7 +63,7 @@ class App extends Component {
         })
     }
 
-    updateSearchResults(query) {
+    _updateSearchResults(query) {
         // Reference: https://stackoverflow.com/questions/10261986/how-to-detect-string-which-contains-only-spaces
         if (!query.replace(/\s/g, '').length) {
             this.setState({searchResults: []});
@@ -81,31 +82,7 @@ class App extends Component {
         this.setState({query});
     }
 
-    static mergeBookshelfAndSearchResults(searchResults, existingBookshelf) {
-        //if (typeof searchResults === "undefined" || typeof existingBookshelf === "undefined") return [];
-        if (searchResults.length === 0) return [];
-        if (existingBookshelf.length === 0) return searchResults;
 
-        const existingMatches = searchResults.map(result => existingBookshelf.filter(existing => existing.id === result.id)).flat(),
-            matchedIds = App.getIds(existingMatches),
-            filteredResults = searchResults.filter(result => !matchedIds.includes(result.id));
-
-        return existingMatches.concat(filteredResults);
-    }
-
-    static getIds(bookArray) {
-        return bookArray.map(book => book.id);
-    }
-
-    /**
-     *
-     * @param allBooks
-     * @param shelf {String}: 'read' || 'wantToRead' || 'currentlyReading'
-     * @return {*}
-     */
-    static createBookshelf(allBooks, shelf) {
-        return allBooks.filter(book => book.shelf === shelf);
-    }
 
     render() {
         const { searchResults, bookshelf, query } = this.state;
@@ -115,16 +92,15 @@ class App extends Component {
         };
 
         const searchPageProps = {
-            searchResults: searchResults,
-            bookshelf: bookshelf,
+            searchResults,
+            bookshelf,
             addToBookshelf: this.addToBookshelf,
-            mergeBookshelfAndSearchResults: App.mergeBookshelfAndSearchResults
         };
 
         const bookshelfProps = {
-            currentlyReading: App.createBookshelf(bookshelf, 'currentlyReading'),
-            wantToRead: App.createBookshelf(bookshelf, 'wantToRead'),
-            read: App.createBookshelf(bookshelf, 'read'),
+            currentlyReading: createBookshelf(bookshelf, 'currentlyReading'),
+            wantToRead: createBookshelf(bookshelf, 'wantToRead'),
+            read: createBookshelf(bookshelf, 'read'),
             addToBookshelf: this.addToBookshelf
         };
 

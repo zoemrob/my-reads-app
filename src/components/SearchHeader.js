@@ -8,7 +8,7 @@ class SearchHeader extends Component {
             query: this.props.query
         };
 
-        this.handleInput = this.handleInput.bind(this);
+        this._handleInput = this._handleInput.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -19,7 +19,7 @@ class SearchHeader extends Component {
         }
     }
 
-    handleInput(event) {
+    _handleInput(event) {
         const newQuery = event.target.value;
         this.setState({query: newQuery})
     }
@@ -36,7 +36,7 @@ class SearchHeader extends Component {
                     className="search-input"
                     type="text"
                     value={this.state.query}
-                    onChange={this.handleInput}
+                    onChange={this._handleInput}
                 />
             </React.Fragment>
         )
