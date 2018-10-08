@@ -3,9 +3,16 @@ li.book {
     text-align: center;
     border: 2px solid black;
     width: 17.5%;
-    background-color: rgba(240,240,240,0.3);
+    background-color: rgba(240,240,240,0.4);
     flex-grow: 1;
     position: relative;
+    transition: all 0.2s ease;
+}
+
+li.book:hover {
+    transform: scale(1.01);
+    box-shadow: 0 15px 15px 0 rgba(0,0,0,0.1);
+    background-color: rgba(240,240,240,0.25);
 }
 
 li.book img {

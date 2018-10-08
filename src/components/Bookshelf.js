@@ -14,7 +14,9 @@ const Bookshelf = props => {
 
     return (
         <React.Fragment>
-            <label htmlFor="currentlyReadingBookshelf" className="bookshelf-label">Currently Reading</label>
+            <p className="bookshelf-label-wrapper">
+                <label htmlFor="currentlyReadingBookshelf" className="bookshelf-label">Currently Reading</label>
+            </p>
             <ul id="currentlyReadingBookshelf" className="bookshelf currentlyReading">
                 {currentlyReading.map(book => (
                     <Book
@@ -25,7 +27,9 @@ const Bookshelf = props => {
                     />
                 ))}
             </ul>
-            <label htmlFor="wantToReadBookshelf" className="bookshelf-label">Want to Read</label>
+            <p className="bookshelf-label-wrapper">
+                <label htmlFor="wantToReadBookshelf" className="bookshelf-label">Want to Read</label>
+            </p>
             <ul id="wantToReadBookshelf" className="bookshelf wantToRead">
                 {wantToRead.map(book => (
                     <Book
@@ -36,7 +40,9 @@ const Bookshelf = props => {
                     />
                 ))}
             </ul>
-            <label htmlFor="readBookshelf" className="bookshelf-label">Read</label>
+            <p className="bookshelf-label-wrapper">
+                <label htmlFor="readBookshelf" className="bookshelf-label">Read</label>
+            </p>
             <ul id="readBookshelf" className="bookshelf read">
                 {read.map(book => (
                     <Book

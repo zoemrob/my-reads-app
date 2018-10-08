@@ -9,10 +9,18 @@ ul.bookshelf {
     padding: 0;
 }
 
+p.bookshelf-label-wrapper {
+    margin: 0;
+    width: 90%;
+    background-color: rgba(0,0,0,0.4);
+    padding: 16px;
+    border-radius: 0 50px 50px 0;
+}
+
 label.bookshelf-label {
     font-size: 2rem;
     font-style: italic;
-    background-color: rgba(0,0,0,0.1);
     text-align: center;
     width: 100%;
+    color: #A9A9A9;
 }
