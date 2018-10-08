@@ -21,7 +21,8 @@ class App extends Component {
          */
         this.state = {
             bookshelf: [],
-            searchResults: []
+            searchResults: [],
+            query: ''
         };
 
         this.addToBookshelf = this.addToBookshelf.bind(this);
@@ -60,6 +61,7 @@ class App extends Component {
             this.setState({searchResults: []});
         } else {
             BooksAPI.search(query).then(response => {
+                //debugger;
                 if (typeof response.error !== "undefined") {
                     this.setState({searchResults: []})
                 } else {
@@ -67,6 +69,10 @@ class App extends Component {
                 }
             });
         }
+    }
+
+    setQuery(query) {
+        this.setState({query});
     }
 
     static mergeBookshelfAndSearchResults(searchResults, existingBookshelf) {
@@ -88,7 +94,7 @@ class App extends Component {
     /**
      *
      * @param allBooks
-     * @param shelf {String}: 'read' || 'wantToRead' || 'reading'
+     * @param shelf {String}: 'read' || 'wantToRead' || 'currentlyReading'
      * @return {*}
      */
     static createBookshelf(allBooks, shelf) {
@@ -105,7 +111,10 @@ class App extends Component {
         };
 
         const bookshelfProps = {
-
+            currentlyReading: App.createBookshelf(bookshelf, 'currentlyReading'),
+            wantToRead: App.createBookshelf(bookshelf, 'wantToRead'),
+            read: App.createBookshelf(bookshelf, 'read'),
+            addToBookshelf: this.addToBookshelf
         };
 
         return (
@@ -118,7 +127,7 @@ class App extends Component {
                 </header>
                 <div className="page-content">
                     <Route exact path='/' render={() => (
-                        <Bookshelf {...bookshelf}/>
+                        <Bookshelf {...bookshelfProps}/>
                     )}/>
                     <Route path='/search' render={() => (
                         <SearchPage {...searchPageProps}/>

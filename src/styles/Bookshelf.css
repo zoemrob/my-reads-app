@@ -8,3 +8,11 @@ ul.bookshelf {
     text-align: center;
     padding: 0;
 }
+
+label.bookshelf-label {
+    font-size: 2rem;
+    font-style: italic;
+    background-color: rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+}
