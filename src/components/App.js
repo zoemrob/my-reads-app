@@ -26,13 +26,19 @@ class App extends Component {
         };
 
         this.addToBookshelf = this.addToBookshelf.bind(this);
-        this.updateSearchResults = this.updateSearchResults.bind(this);
+        this.setQuery = this.setQuery.bind(this);
     }
 
     componentDidMount() {
         BooksAPI.getAll().then(books => {
             this.setState({bookshelf: books});
         })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.query !== this.state.query) {
+            this.updateSearchResults(this.state.query.trim());
+        }
     }
 
     addToBookshelf(book, shelf) {
@@ -61,7 +67,6 @@ class App extends Component {
             this.setState({searchResults: []});
         } else {
             BooksAPI.search(query).then(response => {
-                //debugger;
                 if (typeof response.error !== "undefined") {
                     this.setState({searchResults: []})
                 } else {
@@ -102,7 +107,12 @@ class App extends Component {
     }
 
     render() {
-        const { searchResults, bookshelf } = this.state;
+        const { searchResults, bookshelf, query } = this.state;
+        const searchHeaderProps = {
+            setQuery: this.setQuery,
+            query
+        };
+
         const searchPageProps = {
             searchResults: searchResults,
             bookshelf: bookshelf,
@@ -122,7 +132,7 @@ class App extends Component {
                 <header className="header">
                     <Route exact path='/' component={MainHeader}/>
                     <Route path='/search' render={() => (
-                        <SearchHeader updateSearchResults={this.updateSearchResults}/>
+                        <SearchHeader {...searchHeaderProps}/>
                     )}/>
                 </header>
                 <div className="page-content">

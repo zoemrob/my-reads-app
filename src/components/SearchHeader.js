@@ -5,21 +5,23 @@ class SearchHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: ''
+            query: this.props.query
         };
 
         this.handleInput = this.handleInput.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const { query } = this.state;
-        if (query !== prevState.query) {
-            this.props.updateSearchResults(query.trim());
+        const { setQuery } = this.props;
+
+        if (this.state.query !== prevState.query) {
+            setQuery(this.state.query);
         }
     }
 
     handleInput(event) {
-        this.setState({query: event.target.value});
+        const newQuery = event.target.value.trim();
+        this.setState({query: newQuery})
     }
 
     render() {
