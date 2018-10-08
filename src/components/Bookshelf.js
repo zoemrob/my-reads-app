@@ -1,7 +1,14 @@
 import React from 'react';
 import Book from './Book';
+import PropTypes from 'prop-types';
 import '../styles/Bookshelf.css';
 
+/**
+ * Bookshelf Component holding 3 shelves of Book Components
+ * @param props
+ * @return JSX
+ * @constructor
+ */
 const Bookshelf = props => {
     const { read, wantToRead, currentlyReading, addToBookshelf } = props;
 
@@ -43,5 +50,15 @@ const Bookshelf = props => {
         </React.Fragment>
 )};
 
+Bookshelf.propTypes = {
+    /** array of Book objects in 'read' shelf */
+    read: PropTypes.array,
+    /** array of Book object in 'wantToRead' shelf */
+    wantToRead: PropTypes.array,
+    /** array of Book objects in 'currentlyReading' shelf */
+    currentlyReading: PropTypes.array,
+    /** bound method App.addToBookshelf to move Books from shelves */
+    addToBookshelf: PropTypes.func
+};
 
 export default Bookshelf;
